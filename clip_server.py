@@ -31,6 +31,7 @@ CUSTOM_LABELS = [
     "kitchen",
     "bedroom",
     "dining room",
+    "living room",
     "bathroom",
 ]
 
