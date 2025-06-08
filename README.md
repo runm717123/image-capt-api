@@ -13,6 +13,8 @@ This is a simple API for generating image type and captions using a pre-trained 
    ```bash
    pip install -r requirements.txt
    ```
+3. Optional: Install `pyTorch` with `CUDA`
+   with `CUDA` enabled, the modal can run ~3x faster!. For more details for installation please refer to https://pytorch.org/get-started/locally
 
 ## Running the API
 To start the API server, run the following command:
