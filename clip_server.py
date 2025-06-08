@@ -33,6 +33,8 @@ CUSTOM_LABELS = [
     "dining room",
     "living room",
     "bathroom",
+    "EPC",
+    "backyard"
 ]
 
 
@@ -54,7 +56,12 @@ async def analyze_image(image: UploadFile = File(...)):
     }
     best_label = max(label_probs, key=label_probs.get)
 
-    caption = generate_caption(pil_image, 1)
+    if best_label == "EPC":
+        caption = "EPC Certificate of the house or property"
+    elif best_label == "floorplan":
+        caption = "Floorplan of the house or property"
+    else:
+        caption = generate_caption(pil_image, 1)
 
     return {"label": best_label, "label_probs": label_probs, "caption": caption}
 
