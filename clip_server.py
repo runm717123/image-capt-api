@@ -60,6 +60,7 @@ async def analyze_image(image: UploadFile = File(...)):
     if best_label == "certificate":
         caption = "EPC Certificate of the house or property"
         best_label = "EPC"
+        label_probs["EPC"] = label_probs.pop("certificate")
     elif best_label == "floorplan":
         caption = "Floorplan of the house or property"
     else:
