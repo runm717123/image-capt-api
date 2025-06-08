@@ -3,13 +3,12 @@ from transformers import CLIPProcessor, CLIPModel
 from PIL import Image
 import torch
 import io
-from gen_caption import generate_caption, generate_captions
+from gen_caption import generate_caption, generate_caption_blip, generate_captions, generate_captions_blip
 from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
 
-# This setup allows all CORS requests
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # allows all domains
@@ -18,7 +17,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load CLIP for classification
 clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
@@ -88,3 +86,18 @@ async def caption_images(image: UploadFile = File(...)):
 @app.get("/test")
 async def tokage():
     return {"message": "Hello World"}
+
+@app.post("/gen-caption2")
+async def caption_image_blip(image: UploadFile = File(...)):
+    contents = await image.read()
+    pil_image = Image.open(io.BytesIO(contents)).convert("RGB")
+    caption = generate_caption_blip(pil_image, 1)
+    return {"caption": caption}
+
+
+@app.post("/gen-captions2")
+async def caption_images_blip(image: UploadFile = File(...)):
+    contents = await image.read()
+    pil_image = Image.open(io.BytesIO(contents)).convert("RGB")
+    captions = generate_captions_blip(pil_image)
+    return {"captions": captions}
