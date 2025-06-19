@@ -1,8 +1,8 @@
 ---
 title: Cntg
 emoji: 💻
-colorFrom: blue
-colorTo: black
+colorFrom: purple
+colorTo: green
 sdk: docker
 app_port: 7860
 suggested_hardware: cpu-basic
