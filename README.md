@@ -23,3 +23,15 @@ python -m uvicorn server:app --port 9001 --reload
 ```
 
 The server will be accessible at http://127.0.0.1:9001.
+---
+title: Cntg
+emoji: 💻
+colorFrom: purple
+colorTo: yellow
+sdk: docker
+pinned: false
+license: mit
+short_description: Image caption and labelling
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference

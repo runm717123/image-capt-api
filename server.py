@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Form, UploadFile, File
+from fastapi.staticfiles import StaticFiles
 from transformers import CLIPProcessor, CLIPModel
 from PIL import Image
 import torch
@@ -16,6 +17,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -83,9 +85,6 @@ async def caption_images(image: UploadFile = File(...)):
     return {"captions": captions}
 
 
-@app.get("/test")
-async def tokage():
-    return {"message": "Hello World"}
 
 @app.post("/gen-caption2")
 async def caption_image_blip(image: UploadFile = File(...)):
@@ -101,3 +100,11 @@ async def caption_images_blip(image: UploadFile = File(...)):
     pil_image = Image.open(io.BytesIO(contents)).convert("RGB")
     captions = generate_captions_blip(pil_image)
     return {"captions": captions}
+
+
+@app.get("/test")
+async def tokage():
+    return {"message": "Hello World"}
+
+# Serve Vite production build
+app.mount("/", StaticFiles(directory="dist", html=True), name="static")
