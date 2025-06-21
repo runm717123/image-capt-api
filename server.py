@@ -6,7 +6,7 @@ import torch
 import io
 from gen_caption import generate_caption, generate_caption_blip, generate_captions, generate_captions_blip
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi.middleware.gzip import GZipMiddleware
 
 app = FastAPI()
 
@@ -17,7 +17,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+app.add_middleware(GZipMiddleware, minimum_size=1000)  # minimum_size in bytes
 
 clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
